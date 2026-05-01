@@ -1,0 +1,19 @@
+# Build artifacts
+*.xpi
+*.zip
+*.crx
+*.pem
+
+# Dependencies
+node_modules/
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+*.swp
+*~
+.idea/
+.vscode/
+
+# Logs
+*.log
