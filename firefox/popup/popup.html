@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>ScreenSense</title>
+<link rel="stylesheet" href="popup.css">
+</head>
+<body>
+<header>
+  <div class="title-row">
+    <h1>ScreenSense</h1>
+    <label class="switch" title="Toggle ScreenSense on/off">
+      <input type="checkbox" id="enabled-toggle">
+      <span class="slider"></span>
+    </label>
+  </div>
+  <p class="status" id="status-line">—</p>
+</header>
+
+<section class="actions" id="actions-section">
+  <button data-action="quiz-fullscreen">
+    <span class="action-title">Full-screen Quiz</span>
+    <span class="action-hint">Auto-highlight correct answer</span>
+  </button>
+  <button data-action="quiz-region">
+    <span class="action-title">Region Quiz</span>
+    <span class="action-hint">Drag a box around the question</span>
+  </button>
+  <button data-action="ask-fullscreen">
+    <span class="action-title">Ask About Screen</span>
+    <span class="action-hint">Full-screen Q&amp;A</span>
+  </button>
+  <button data-action="ask-region">
+    <span class="action-title">Ask About Region</span>
+    <span class="action-hint">Drag a box and ask</span>
+  </button>
+</section>
+
+<section class="watcher-section">
+  <label class="row">
+    <input type="checkbox" id="watcher-toggle">
+    <span>Auto-watch this tab for quiz questions</span>
+  </label>
+  <p class="hint">When on, ScreenSense monitors page changes and auto-highlights
+  correct answers as new questions appear.</p>
+</section>
+
+<details class="config">
+  <summary>Provider &amp; settings</summary>
+
+  <div class="row">
+    <label for="provider-select">Provider</label>
+    <select id="provider-select"></select>
+  </div>
+
+  <div class="row">
+    <label for="model-input">Model</label>
+    <div class="model-row">
+      <select id="model-select"></select>
+      <button id="refresh-models" class="ghost" title="Fetch models (Open WebUI)" hidden>↻</button>
+    </div>
+  </div>
+
+  <div class="row" id="api-key-row">
+    <label for="api-key">API key</label>
+    <input type="password" id="api-key" placeholder="sk-…" autocomplete="off">
+  </div>
+
+  <div class="row" id="base-url-row" hidden>
+    <label for="base-url">Base URL</label>
+    <input type="text" id="base-url" placeholder="https://ai.example.com" autocomplete="off">
+  </div>
+
+  <details class="sub-config" id="cf-section" hidden>
+    <summary>Behind a Cloudflare tunnel?</summary>
+    <div class="row">
+      <label for="cf-id">Client ID</label>
+      <input type="text" id="cf-id" placeholder="xxxxxxxx.access" autocomplete="off">
+    </div>
+    <div class="row">
+      <label for="cf-secret">Client Secret</label>
+      <input type="password" id="cf-secret" autocomplete="off">
+    </div>
+  </details>
+
+  <div class="row buttons">
+    <button id="test-config" class="ghost" title="Make a small test request to verify the connection works">Test</button>
+    <button id="save-config" class="primary">Save</button>
+    <span class="save-state" id="save-state"></span>
+  </div>
+</details>
+
+<details class="config">
+  <summary>Output settings</summary>
+
+  <div class="row">
+    <label for="output-mode">Send answers to</label>
+    <select id="output-mode">
+      <option value="screen">On screen (default)</option>
+      <option value="telegram">Telegram only (hidden from screen)</option>
+    </select>
+  </div>
+  <p class="hint" id="output-hint">Answers appear on the page as usual.</p>
+
+  <div id="telegram-fields" hidden>
+    <div class="row">
+      <label for="tg-token">Bot token</label>
+      <input type="password" id="tg-token" placeholder="123456:ABC-DEF…" autocomplete="off">
+    </div>
+    <div class="row">
+      <label for="tg-chatid">Chat ID</label>
+      <input type="text" id="tg-chatid" placeholder="e.g. 123456789" autocomplete="off">
+    </div>
+    <p class="hint">
+      Create a bot with <code>@BotFather</code> to get the token. Send your bot
+      a message first, then visit
+      <code>https://api.telegram.org/bot&lt;token&gt;/getUpdates</code> to find
+      your numeric chat ID. When this mode is on, answers go ONLY to Telegram —
+      nothing appears on the page.
+    </p>
+  </div>
+
+  <div class="row buttons">
+    <button id="tg-test" class="ghost" title="Send a test message to Telegram" hidden>Send test message</button>
+    <button id="output-save" class="primary">Save</button>
+    <span class="save-state" id="output-save-state"></span>
+  </div>
+</details>
+
+<footer>
+  <div class="diag-row">
+    <button id="diag-btn" class="ghost-sm" title="Probe each part of the extension and report what's working">Run diagnostics</button>
+    <button id="reload-content-btn" class="ghost-sm" title="Force-reload the content script on the current tab">Re-inject on this tab</button>
+  </div>
+  <pre id="diag-output"></pre>
+  <div class="hotkeys">
+    <div>Hotkeys: <code>Ctrl+Shift+1</code> quiz region · <code>2</code> quiz screen · <code>3</code> ask region · <code>4</code> ask screen</div>
+    <button id="customize-hotkeys" class="linklike" title="Open the browser's shortcut editor">Customize hotkeys →</button>
+  </div>
+</footer>
+
+<script src="popup.js" type="module"></script>
+</body>
+</html>
