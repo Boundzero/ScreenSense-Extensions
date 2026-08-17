@@ -16,6 +16,10 @@ This repo contains two builds from one shared codebase:
 
 The three logic files (`providers.js`, `background.js`, `content.js`) are kept byte-identical between the two builds except for a small number of browser-specific strings; the manifests and popups are intentionally browser-specific.
 
+Thank you for checking out my repository! Please consider donating which helps me continue developing and providing updates and new features!
+
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/B6U7259U1Y)
+
 ---
 
 ## Intended use
